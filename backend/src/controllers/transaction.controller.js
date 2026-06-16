@@ -346,3 +346,37 @@ export const downloadBookTransactionPDF = async (req, res) => {
         });
     }
 };
+
+// get transactions by book
+export const getTransactionsByBook = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).json({
+                message: "Invalid ObjectId"
+            });
+        }
+        
+        const transactions = await Transaction.find({ user: req.user._id, book: id }).populate("category", "name").sort({ createdAt: -1 });;
+
+        if (transactions.length === 0) {
+            return res.status(200).json({
+                success: true,
+                data: [],
+                message: "No transactions found"
+            });
+        }
+        res.status(200).json({
+            success: true,
+            data: transactions,
+            message: "Transactions fetched successfully"
+        });
+
+    } catch (error) {
+        console.log("Error in getTransactionsByBook controller", error);
+        res.status(500).json({
+            message: "Internal server error"
+        });
+    }
+}
