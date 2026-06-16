@@ -4,6 +4,7 @@ import { Book } from '../models/book.model.js';
 import { Category } from '../models/category.model.js';
 import mongoose from 'mongoose';
 import { uploadOnCloudinary, deleteOnCloudinary } from '../config/cloudinary.js';
+import { generateTransactionPDF } from "../config/pdf.js";
 
 // create transaction
 export const createTransaction = async (req, res) => {
@@ -305,6 +306,43 @@ export const deleteTransaction = async (req, res) => {
         console.log("Error in deleteTransaction controller", error);
         res.status(500).json({
             message: "Internal server error"
+        });
+    }
+};
+
+// get transactions pdf
+export const downloadBookTransactionPDF = async (req, res) => {
+    try {
+        const { bookId } = req.params;
+
+        if (!mongoose.Types.ObjectId.isValid(bookId)) {
+            return res.status(400).json({
+                success: false,
+                message: "Invalid Book ID",
+            });
+        }
+
+        const transactions = await Transaction.find({
+            user: req.user._id,
+            book: bookId,
+        })
+            .populate("category", "name")
+            .sort({ date: -1 });
+
+        if (!transactions.length) {
+            return res.status(404).json({
+                success: false,
+                message: "No transactions found for this book",
+            });
+        }
+
+        generateTransactionPDF(transactions, res);
+    } catch (error) {
+        console.log("Book PDF error:", error);
+
+        res.status(500).json({
+            success: false,
+            message: "Internal server error",
         });
     }
 };
