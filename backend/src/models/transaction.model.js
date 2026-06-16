@@ -19,7 +19,7 @@ const transactionSchema = new mongoose.Schema({
     },
     paymentMethod: {
         type: String,
-        enum: ["online", "check", "cash"],
+        enum: ["online", "check", "cash", "card"],
         required: true
     },
     transactionType: {
@@ -31,7 +31,6 @@ const transactionSchema = new mongoose.Schema({
         type: Date,
         required: true
     },
-
     amount: {
         type: Number,
         required: true
@@ -39,7 +38,7 @@ const transactionSchema = new mongoose.Schema({
     remarks: {
         type: String
     },
-    bill: {
+    receipt: {
         url: {
             type: String
         },
