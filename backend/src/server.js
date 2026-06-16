@@ -8,7 +8,8 @@ import connectDB from './config/db.js';
 // routes
 import userRoutes from './routes/user.route.js';
 import bookRoutes from './routes/book.route.js';
-import categoryRoutes from './routes/category.route.js'
+import categoryRoutes from './routes/category.route.js';
+import transactionRoutes from './routes/transaction.route.js';
 
 const app = express();
 
@@ -22,7 +23,8 @@ const port = process.env.PORT || 3000;
 // API routes
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/books', bookRoutes);
-app.use('/api/v1/category',categoryRoutes)
+app.use('/api/v1/category',categoryRoutes);
+app.use("/api/v1/transaction", transactionRoutes);
 
 app.get("/", (req, res) => {
     res.send("Spendora API is working");
