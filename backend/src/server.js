@@ -10,6 +10,7 @@ import userRoutes from './routes/user.route.js';
 import bookRoutes from './routes/book.route.js';
 import categoryRoutes from './routes/category.route.js';
 import transactionRoutes from './routes/transaction.route.js';
+import analyticsRoutes from './routes/analytics.route.js';
 
 const app = express();
 
@@ -25,6 +26,7 @@ app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/books', bookRoutes);
 app.use('/api/v1/category',categoryRoutes);
 app.use("/api/v1/transaction", transactionRoutes);
+app.use("/api/v1/analytics", analyticsRoutes);
 
 app.get("/", (req, res) => {
     res.send("Spendora API is working");
