@@ -105,7 +105,7 @@ export const createTransaction = async (req, res) => {
 // get all transaactions
 export const getTransactions = async (req, res) => {
     try {
-        const transactions = await Transaction.find({ user: req.user._id }).populate("category", "name").sort({ createdAt: -1 });;
+        const transactions = await Transaction.find({ user: req.user._id }).populate("category", "name").populate("book", "name").sort({ createdAt: -1 });;
 
         if (transactions.length === 0) {
             return res.status(200).json({
