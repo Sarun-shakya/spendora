@@ -110,7 +110,7 @@ export const getMonthlyReport = async (req, res) => {
         const transactions = await Transaction.find({
             user: userId,
             date: { $gte: startDate, $lte: endDate },
-        }).sort({ date: -1 });
+        }).sort({ date: -1 }).populate("category").populate("book");
 
         let totalIncome = 0;
         let totalExpense = 0;
