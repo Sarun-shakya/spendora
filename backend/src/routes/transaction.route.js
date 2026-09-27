@@ -20,6 +20,6 @@ router.get("/:id", getTransactionById);
 router.get("/:bookId/download-pdf", downloadBookTransactionPDF);
 router.get("/book/:id", getTransactionsByBook);
 router.put("/:id",upload.single("receipt"), updateTransaction);
-router.delete("/id", deleteTransaction);
+router.delete("/:id", deleteTransaction);
 
 export default router;
