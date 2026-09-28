@@ -22,7 +22,7 @@ app.use(cookieParser());
 app.use(
   cors({
     // origin: "http://localhost:5173",
-    origin: "https://spendoora.netlify.app/",
+    origin: "https://spendoora.netlify.app",
     credentials: true,
   })
 );
